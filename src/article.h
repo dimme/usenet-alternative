@@ -8,7 +8,7 @@ class Article {
 public:
     
 private:
-    int ident;
+    int ident; //It is unique and bigger than 0
     std::string title, content;
     User author;
 };

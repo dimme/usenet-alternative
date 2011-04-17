@@ -9,8 +9,8 @@ class Newsgroup {
 public:
     
 private:
-    int ident;
-    std::string name;
+    int ident; //It is unique and bigger than 0
+    std::string name; //It is unique
     std::vector<Article> articles;
 };
 
