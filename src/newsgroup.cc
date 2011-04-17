@@ -1,1 +1,1 @@
-#include "newsgroup.h";
+#include "newsgroup.h"
