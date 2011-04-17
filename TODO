@@ -10,8 +10,8 @@ User should be able to:
 	* Any user can delete any newsgroups/articles
 
 Content types (Stored on server):
-	* Newsgroups(ID (Unique bigger than 0), Name (Unique), Article, Date)
-	* Articles(ID (Unique bigger than 0), Title, Author, Content, Date)
+	* Newsgroups(ID (Unique bigger than 0), Name (Unique), Article)
+	* Articles(ID (Unique bigger than 0), Title, Author, Content)
 	* User(Name)
 
 Server requirements:
@@ -32,5 +32,3 @@ Client requirements:
 	* It should be easy to use and self-explanatory
 	* If there is an error that the client cannot handle (it should try to
 	  handle them all) it should quit with an informative error message
-
-
