@@ -33,3 +33,4 @@ Client requirements:
 	* If there is an error that the client cannot handle (it should try to
 	  handle them all) it should quit with an informative error message
 
+
