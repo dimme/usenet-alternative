@@ -1,6 +1,35 @@
-User should be able to:
+v1.0:
 
+Document code!
+
+User should be able to:
 	* List all newsgroups
 	* Create and delete newsgroups
 	* List articles in a newsgroup
 	* Read, write and delete articles in a newsgroup
+	* Any user can delete any newsgroups/articles
+
+Content types (Stored on server):
+	* Newsgroups(ID (Unique bigger than 0), Name (Unique), Article, Date)
+	* Articles(ID (Unique bigger than 0), Title, Author, Content, Date)
+	* User(Name)
+
+Server requirements:
+	* Two versions of the server:
+		- One storing data to primary memory
+		- One storing data on the disk
+	* The one storing data to memory will lose all data on restart
+	* The disk version remembers the data after reboot, changes to 
+	  database are immediately reflected on disk
+	* Order newsgroups/articles by date where oldest comes first
+	* Clients not following the protocol are immediately disconnected
+	* If there is an error that the server cannot handle (it should try to
+	  handle them all) it should quit with an informative error message
+
+Client requirements:
+	* The client reads commands form the terminal, sends them to the server,
+	  and displays results on the terminal
+	* It should be easy to use and self-explanatory
+	* If there is an error that the client cannot handle (it should try to
+	  handle them all) it should quit with an informative error message
+
