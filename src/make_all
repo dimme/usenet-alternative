@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Making..."
+cd clientserver
+make cleaner
+make
+cd ..
+make clean
+make
+echo "Done making, enjoy the binaries!"
