@@ -2,7 +2,8 @@
 #define NEWSGROUP_H
 
 #include <string>
-#include ""
+#include <vector>
+#include "article.h"
 
 class Newsgroup {
 public:
@@ -10,7 +11,7 @@ public:
 private:
     int ident;
     std::string name;
-    vector<Article> articles;
+    std::vector<Article> articles;
 };
 
 #endif
