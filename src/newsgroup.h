@@ -1,6 +1,8 @@
 #ifndef NEWSGROUP_H
 #define NEWSGROUP_H
 
+#include <string>
+
 class Newsgroup {
 public:
     
