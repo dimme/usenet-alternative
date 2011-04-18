@@ -45,11 +45,7 @@ void MessageHandler::sendStringParameter(std::string param) {
 
 
 int MessageHandler::recvByte() {
-    int code = conn->read();
-    if (code == Connection::CONNECTION_CLOSED) {
-        throw ConnectionClosedException();
-    }
-    return code;
+    return conn->read();
 }
 
 int MessageHandler::recvCode() {
