@@ -8,6 +8,9 @@
 #define PROTOCOL_H
 
 namespace protocol {
+    
+  struct ProtocolViolationException {};
+    
   struct Protocol {
     enum {
       /* Command codes, client -> server */

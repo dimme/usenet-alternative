@@ -7,12 +7,22 @@
 
 #include <string>
 
+/**
+ * Message handler is the low-level message handler for messages to/from the
+ * server. It handles transmission/reception of low-level message units.
+ */
 class MessageHandler {
 public:
     
+    /**
+	 * Create a message handler.
+	 * 
+	 * @param conn
+	 *            The connection to use messages
+	 */
     MessageHandler(client_server::Connection* c) : conn(c) { }
     
-    void sendCode(int code);
+    void sendCode(unsigned char code);
     
     void sendInt(int value);
     
@@ -20,7 +30,7 @@ public:
     
     void sendStringParameter(std::string param);
     
-    int recvCode();
+    unsigned char recvCode();
     
     int recvInt();
     
@@ -29,11 +39,11 @@ public:
     std::string recvStringParameter();
     
 private:
-    void sendByte(int code);
+    void sendByte(unsigned char code);
     
-    int recvByte();
+    unsigned char recvByte();
     
-    client_server::Connection* conn;
+    client_server::Connection* conn; //The connection
 
 };
 
