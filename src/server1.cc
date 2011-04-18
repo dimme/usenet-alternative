@@ -29,8 +29,37 @@ int main(int argc, char* argv[]) {
         if (conn != 0) {
             try {
                 
+                MessageHandler handler(conn);
+                unsigned char code = handler.recvCode();
                 
-                
+                switch (code) {
+                    case Protocol::COM_LIST_NG:
+                        break;
+                        
+                    case Protocol::COM_CREATE_NG:
+                        break;
+                        
+                    case Protocol::COM_DELETE_NG:
+                        break;
+                        
+                    case Protocol::COM_LIST_ART:
+                        break;
+                        
+                    case Protocol::COM_CREATE_ART:
+                        break;
+                        
+                    case Protocol::COM_DELETE_ART:
+                        break;
+                        
+                    case Protocol::COM_GET_ART:
+                        break;
+                        
+                    case Protocol::COM_END:
+                        break;
+
+                    default:
+                        break;
+                }
                 
                 
                 
