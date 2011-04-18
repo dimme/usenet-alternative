@@ -10,11 +10,11 @@ all: client server1 server2
 client: client.o $(LIBS)
 	$(CXX) -o client client.o $(LIBS)
 
-server1: server1.o database.o article.o newsgroup.o user.o $(LIBS)
-	$(CXX) -o server1 server1.o database.o article.o newsgroup.o user.o $(LIBS)
+server1: server1.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
+	$(CXX) -o server1 server1.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
 
-server2: server2.o database.o article.o newsgroup.o user.o $(LIBS)
-	$(CXX) -o server2 server2.o database.o article.o newsgroup.o user.o $(LIBS)
+server2: server2.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
+	$(CXX) -o server2 server2.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
 
 
 
@@ -40,7 +40,8 @@ newsgroup.o: newsgroup.cc newsgroup.h
 user.o: user.cc user.h
 	$(CXX) -c $(CXXFLAGS) user.cc
 
-
+message_handler.o: message_handler.cc message_handler.h
+	$(CXX) -c $(CXXFLAGS) message_handler.cc
 
 
 clean:
