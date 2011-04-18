@@ -34,37 +34,41 @@ int main(int argc, char* argv[]) {
                 
                 switch (code) {
                     case Protocol::COM_LIST_NG:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_CREATE_NG:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_DELETE_NG:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_LIST_ART:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_CREATE_ART:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_DELETE_ART:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_GET_ART:
+                        cout << code << endl;
                         break;
                         
                     case Protocol::COM_END:
+                        cout << code << endl;
                         break;
 
                     default:
+                        throw ProtocolViolationException();
                         break;
                 }
-                
-                
-                
-                
-                
             } catch (ConnectionClosedException&) {
                 server.deregisterConnection(conn);
                 delete conn;
