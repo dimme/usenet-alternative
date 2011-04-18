@@ -20,7 +20,7 @@ public:
     
     void sendStringParameter(std::string param);
     
-    int recvCore();
+    int recvCode();
     
     int recvInt();
     
