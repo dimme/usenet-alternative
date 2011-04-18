@@ -28,11 +28,20 @@ int main(int argc, char* argv[]) {
         Connection* conn = server.waitForActivity();
         if (conn != 0) {
             try {
-                // Do whatever
+                
+                
+                
+                
+                
+                
+                
+                
             } catch (ConnectionClosedException&) {
                 server.deregisterConnection(conn);
                 delete conn;
                 cout << "Client closed connection" << endl;
+            } catch (ProtocolViolationException&) {
+                cout << "The protocol was violated by the client" << endl;
             }
         } else {
             server.registerConnection(new Connection);
