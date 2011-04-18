@@ -19,13 +19,13 @@ server2: server2.o database.o article.o newsgroup.o user.o message_handler.o $(L
 
 
 
-client.o: client.cc client.h
+client.o: client.cc
 	$(CXX) -c $(CXXFLAGS) client.cc
 
-server1.o: server1.cc server1.h
+server1.o: server1.cc
 	$(CXX) -c $(CXXFLAGS) server1.cc
 
-server2.o: server2.cc server2.h
+server2.o: server2.cc
 	$(CXX) -c $(CXXFLAGS) server2.cc
 
 database.o: database.cc database.h

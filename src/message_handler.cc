@@ -8,7 +8,6 @@
 using namespace std;
 using protocol::Protocol;
 using protocol::ProtocolViolationException;
-using client_server::Server;
 using client_server::Connection;
 using client_server::ConnectionClosedException;
 
