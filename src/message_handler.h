@@ -4,6 +4,7 @@
 #include "clientserver/server.h"
 #include "clientserver/connection.h"
 #include "clientserver/connectionclosedexception.h"
+#include "clientserver/protocol.h"
 
 #include <string>
 
@@ -22,21 +23,26 @@ public:
 	 */
     MessageHandler(client_server::Connection* c) : conn(c) { }
     
+    /*
+     * Copy constructor
+     */
+    MessageHandler(const MessageHandler& h) : conn(h.conn) {}
+    
     void sendCode(unsigned char code);
     
     void sendInt(int value);
     
-    void sendIntParameter(int param);
+    void sendIntParam(int param);
     
-    void sendStringParameter(std::string param);
+    void sendStringParam(std::string param);
     
     unsigned char recvCode();
     
     int recvInt();
     
-    int recvIntParameter();
+    int recvIntParam();
     
-    std::string recvStringParameter();
+    std::string recvStringParam();
     
 private:
     void sendByte(unsigned char code);

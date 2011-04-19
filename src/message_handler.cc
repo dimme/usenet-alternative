@@ -1,5 +1,4 @@
 #include "message_handler.h"
-#include "clientserver/protocol.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -11,7 +10,9 @@ using protocol::ProtocolViolationException;
 using client_server::Connection;
 using client_server::ConnectionClosedException;
 
-
+/*
+ * Private
+ */
 void MessageHandler::sendByte(unsigned char code) {
     conn->write(code);
 }
@@ -51,7 +52,7 @@ void MessageHandler::sendInt(int value) {
  * @throws ConnectionClosedException
  *             If the server died
  */
-void MessageHandler::sendIntParameter(int param) {
+void MessageHandler::sendIntParam(int param) {
     sendCode(Protocol::PAR_NUM);
     sendInt(param);
 }
@@ -64,7 +65,7 @@ void MessageHandler::sendIntParameter(int param) {
  * @throws ConnectionClosedException
  *             If the server died
  */
-void MessageHandler::sendStringParameter(std::string param) {
+void MessageHandler::sendStringParam(std::string param) {
     sendCode(Protocol::PAR_STRING);
     sendInt(param.size());
     for (size_t i = 0; i < param.size(); ++i) {
@@ -72,6 +73,9 @@ void MessageHandler::sendStringParameter(std::string param) {
     }
 }
 
+/*
+ * Private
+ */
 unsigned char MessageHandler::recvByte() {
     return conn->read();
 }
@@ -109,7 +113,7 @@ int MessageHandler::recvInt() {
  * @throws ConnectionClosedException
  *             If the server died
  */
-int MessageHandler::recvIntParameter() {
+int MessageHandler::recvIntParam() {
     unsigned char code = recvCode();
     if (code != Protocol::PAR_NUM) {
         throw ProtocolViolationException();
@@ -124,7 +128,7 @@ int MessageHandler::recvIntParameter() {
  * @throws ConnectionClosedException
  *             If the server died
  */
-std::string MessageHandler::recvStringParameter() {
+std::string MessageHandler::recvStringParam() {
     int code = recvCode();
     if (code != Protocol::PAR_STRING) {
         throw ProtocolViolationException();

@@ -3,10 +3,18 @@
 
 #include <string>
 
-class User {
-public:
+struct User {
     
-private:
+    /*
+     * Copy constructor
+     */
+    User(const User& u) : name(u.name) {}
+    
+    /*
+     * Constructor with string
+     */
+    User(std::string n) : name(n) {}
+    
     std::string name;
 };
 
