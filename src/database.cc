@@ -97,18 +97,34 @@ void Database::deleteArticle(int groupID, int artID) {
  * Lists all articles for a newsgroup
  */
 ArticleList Database::listArticles(int groupID) {
-    throw NewsgroupDoesNotExistException();
-    return ArticleList();
+    
+    GroupList::iterator git = findGroupByID(groupID);
+    
+    if(git == newsgroups.end())
+        throw NewsgroupDoesNotExistException();
+    
+    return git->second;
 }
 
 /*
  * Returns an article from a newsgroup
  */
 Article Database::getArticle(int groupID, int artID) {
-    //throw NewsgroupDoesNotExistException();
-    throw ArticleDoesNotExistException();
     
-    return Article(artID, User(""), "Good art", "blabla");
+    GroupList::iterator git = findGroupByID(groupID);
+    
+    if(git == newsgroups.end() || git->first.name == "")
+        throw NewsgroupDoesNotExistException();
+    
+    ArticleList::iterator ait = git->second.begin();
+    while (ait != git->second.end() && ait->ident != artID){
+        ++ait;
+    }
+    
+    if(ait == git->second.end())
+        throw ArticleDoesNotExistException();
+    
+    return (*ait);
 }
 
 /*

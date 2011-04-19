@@ -374,10 +374,6 @@ int main(int argc, char* argv[]) {
                         cout << "Received: COM_GET_ART" << endl;
                         getArt(handler, db);
                         break;
-                        
-                    case Protocol::COM_END:
-                        cout << "Look for errors if this happens" << endl;
-                        break;
 
                     default:
                         throw ProtocolViolationException();
