@@ -15,6 +15,7 @@ using client_server::ConnectionClosedException;
  */
 void MessageHandler::sendByte(unsigned char code) {
     conn->write(code);
+    cout << "Sent byte: " << static_cast<int>(code) << endl;;
 }
     
 /**
@@ -99,11 +100,11 @@ unsigned char MessageHandler::recvCode() {
  *             If the server died
  */
 int MessageHandler::recvInt() {
-    unsigned char byte1 = conn->read();
-    unsigned char byte2 = conn->read();
-    unsigned char byte3 = conn->read();
-    unsigned char byte4 = conn->read();
-    return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4;
+    unsigned char byte1 = recvByte();
+    unsigned char byte2 = recvByte();
+    unsigned char byte3 = recvByte();
+    unsigned char byte4 = recvByte();
+    return byte1 << 24 | byte2 << 16 | byte3 << 8 | byte4;
 }
 
 /**
@@ -141,7 +142,7 @@ std::string MessageHandler::recvStringParam() {
     stringstream ss;
     
     for (int i = 1; i <= n; ++i) {
-        ss << conn->read();
+        ss << recvByte();
     }
     return ss.str();
 }

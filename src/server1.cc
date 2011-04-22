@@ -28,7 +28,7 @@ void listNg(MessageHandler& handler, Database& db) {
     handler.sendCode(Protocol::ANS_LIST_NG);
     
     cout << "Sending: " << list.size() << endl;
-    handler.sendInt(list.size());
+    handler.sendIntParam(list.size());
     
     
     for (GroupList::iterator it = list.begin(); it != list.end(); ++it) {
