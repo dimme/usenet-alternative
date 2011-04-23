@@ -5,8 +5,7 @@
 #include <sstream>
 
 using namespace std;
-using protocol::Protocol;
-using protocol::ProtocolViolationException;
+using namespace protocol;
 using client_server::Connection;
 using client_server::ConnectionClosedException;
 
@@ -15,7 +14,6 @@ using client_server::ConnectionClosedException;
  */
 void MessageHandler::sendByte(unsigned char code) {
     conn->write(code);
-    cout << "Sent byte: " << static_cast<int>(code) << endl;;
 }
     
 /**
@@ -28,6 +26,9 @@ void MessageHandler::sendByte(unsigned char code) {
  */
 void MessageHandler::sendCode(unsigned char code) {
     sendByte(code);
+    cout << protocolValue(code) << " ";
+    if (Protocol::ANS_END == code)
+        cout << endl << endl;
 }
 
 /**
@@ -43,6 +44,7 @@ void MessageHandler::sendInt(int value) {
     sendByte((value >> 16) & 0xFF);
     sendByte((value >> 8) & 0xFF);
     sendByte(value & 0xFF);
+    cout << value << " ";
 }
 
 /**
@@ -72,6 +74,7 @@ void MessageHandler::sendStringParam(std::string param) {
     for (size_t i = 0; i < param.size(); ++i) {
         sendByte(param[i]);
     }
+    cout << param << " ";
 }
 
 /*
@@ -89,7 +92,11 @@ unsigned char MessageHandler::recvByte() {
  *             If the server died
  */
 unsigned char MessageHandler::recvCode() {
-    return recvByte();
+    unsigned char code = recvByte();
+    cout << protocolValue(code) << " ";
+    if (Protocol::COM_END == code)
+        cout << endl;
+    return code;
 }
 
 /**
@@ -104,7 +111,9 @@ int MessageHandler::recvInt() {
     unsigned char byte2 = recvByte();
     unsigned char byte3 = recvByte();
     unsigned char byte4 = recvByte();
-    return byte1 << 24 | byte2 << 16 | byte3 << 8 | byte4;
+    int value = byte1 << 24 | byte2 << 16 | byte3 << 8 | byte4;
+    cout << value << " ";
+    return value;
 }
 
 /**
@@ -144,7 +153,95 @@ std::string MessageHandler::recvStringParam() {
     for (int i = 1; i <= n; ++i) {
         ss << recvByte();
     }
+    
+    cout << ss.str() << " ";
     return ss.str();
+}
+
+
+
+
+string protocolValue(const int &code) {        
+    
+    switch (code) {
+        case protocol::Protocol::COM_LIST_NG:
+            return string("COM_LIST_NG");
+            
+        case protocol::Protocol::COM_CREATE_NG:
+            return string("COM_CREATE_NG");
+            
+        case protocol::Protocol::COM_DELETE_NG:
+            return string("COM_DELETE_NG");
+            
+        case protocol::Protocol::COM_LIST_ART:
+            return string("COM_LIST_ART");
+            
+        case protocol::Protocol::COM_CREATE_ART:
+            return string("COM_CREATE_ART");
+            
+        case protocol::Protocol::COM_DELETE_ART:
+            return string("COM_DELETE_ART");
+            
+        case protocol::Protocol::COM_GET_ART:
+            return string("COM_GET_ART");
+            
+        case protocol::Protocol::COM_END:
+            return string("COM_END");
+            
+        case protocol::Protocol::ANS_LIST_NG:
+            return string("ANS_LIST_NG");
+            
+        case protocol::Protocol::ANS_CREATE_NG:
+            return string("ANS_CREATE_NG");
+            
+        case protocol::Protocol::ANS_DELETE_NG:
+            return string("ANS_DELETE_NG");
+            
+        case protocol::Protocol::ANS_LIST_ART:
+            return string("ANS_LIST_ART");
+            
+        case protocol::Protocol::ANS_CREATE_ART:
+            return string("ANS_CREATE_ART");
+            
+        case protocol::Protocol::ANS_DELETE_ART:
+            return string("ANS_DELETE_ART");
+            
+        case protocol::Protocol::ANS_GET_ART:
+            return string("ANS_GET_ART");
+            
+        case protocol::Protocol::ANS_END:
+            return string("ANS_END");
+            
+        case protocol::Protocol::ANS_ACK:
+            return string("ANS_ACK");
+            
+        case protocol::Protocol::ANS_NAK:
+            return string("ANS_NAK");
+            
+        case protocol::Protocol::PAR_STRING:
+            return string("PAR_STRING");
+            
+        case protocol::Protocol::PAR_NUM:
+            return string("PAR_NUM");
+            
+        case protocol::Protocol::ERR_NG_ALREADY_EXISTS:
+            return string("ERR_NG_ALREADY_EXISTS");
+            
+        case protocol::Protocol::ERR_NG_DOES_NOT_EXIST:
+            return string("ERR_NG_DOES_NOT_EXIST");
+            
+        case protocol::Protocol::ERR_ART_DOES_NOT_EXIST:
+            return string("ERR_ART_DOES_NOT_EXIST");
+    }
+    return string("Unknown protocol command");
+}
+
+string protocolValue(const char &code) {
+    return protocolValue(static_cast<int>(code));
+}
+
+string protocolValue(const unsigned char &code) {
+    return protocolValue(static_cast<int>(code));
 }
 
 

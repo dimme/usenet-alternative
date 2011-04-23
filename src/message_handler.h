@@ -53,4 +53,10 @@ private:
 
 };
 
+
+std::string protocolValue(const int &code);
+std::string protocolValue(const char &code);
+std::string protocolValue(const unsigned char &code);
+
+
 #endif
