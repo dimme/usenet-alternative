@@ -46,7 +46,6 @@ void Database::deleteNewsgroup(int ident) {
 /*
  * Returns a list with all existing newsgroups
  */
-bool groupComp (GroupItem i, GroupItem j) { return (i.first < j.first); }
 GroupList Database::listNewsgroups() {
     
     return newsgroups;

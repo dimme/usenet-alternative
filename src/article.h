@@ -22,11 +22,6 @@ struct Article {
             content(art.content), 
             author(art.author) {}
     
-    /*
-     * It compares two articles for sorting
-     */
-    bool operator<(const Article& art);
-    
     int ident; //It is unique and bigger than 0
     std::string title, content;
     User author;
