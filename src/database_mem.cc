@@ -1,21 +1,18 @@
+//This implements the memory-based database, still the same header file.
 #include "database.h"
 
 
 using namespace std;
 
 /*
- * Constructor for the database
+ * Constructor for the database doing nothing
  */
-Database::Database() {
-
-}
+Database::Database() { }
 
 /*
- * Destructor for the database
+ * Destructor for the database doing nothing
  */
-Database::~Database() {
-    
-}
+Database::~Database() { }
 
 /*
  * Adds a new newsgroup to the database

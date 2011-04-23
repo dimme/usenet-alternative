@@ -1,21 +1,20 @@
+//This implements the disk-based database, still the same header file.
 #include "database.h"
-
+#include <sstream>
 
 using namespace std;
 
 /*
- * Constructor for the database
+ * Constructor for the database loading data from disk
  */
 Database::Database() {
-
+    loadData();
 }
 
 /*
- * Destructor for the database
+ * Destructor for the database doing nothing
  */
-Database::~Database() {
-    
-}
+Database::~Database() { }
 
 /*
  * Adds a new newsgroup to the database
@@ -26,6 +25,7 @@ void Database::addNewsgroup(string name) {
         Newsgroup group(findBiggestGroupID() + 1, name);
         ArticleList list;
         newsgroups.push_back(make_pair(group, list));
+        saveData();
     } else 
         throw NewsgroupAlreadyExistsException();
 }
@@ -37,9 +37,10 @@ void Database::deleteNewsgroup(int ident) {
 
     GroupList::iterator it = findGroupByID(ident);
     
-    if(it != newsgroups.end() && it->first.name != "")
+    if(it != newsgroups.end() && it->first.name != "") {
         newsgroups.erase(it);
-    else
+        saveData();
+    } else
         throw NewsgroupDoesNotExistException();
 }
 
@@ -62,6 +63,7 @@ void Database::addArticle(int groupID, User author, std::string title, std::stri
         
         Article art(findBiggestArticleID(it->second)+1, author, title, content);
         it->second.push_back(art);
+        saveData();
         
     } else
         throw NewsgroupDoesNotExistException();
@@ -86,6 +88,7 @@ void Database::deleteArticle(int groupID, int artID) {
         throw ArticleDoesNotExistException();
     
     git->second.erase(ait);
+    saveData();
 }
 
 /*
@@ -168,4 +171,105 @@ int Database::findBiggestArticleID(ArticleList& list) {
         if(it->ident > max) max = it->ident;
     
     return max;
+}
+
+/*
+ * Saves all the newsgroups and articles to the harddisk
+ */
+void Database::saveData() {
+    ofstream out("data.db");
+    
+    out << newsgroups.size() << endl;
+    for (GroupList::iterator git = newsgroups.begin(); git != newsgroups.end(); ++git) {
+        
+        out << git->first.ident << endl;
+        out << git->first.name.size() << " " << git->first.name << endl;
+        
+        out << git->second.size() << endl;
+        for (ArticleList::iterator ait = git->second.begin(); ait != git->second.end(); ++ait ) {            
+            out << ait->ident << endl;
+            out << ait->title.size() << " " << ait->title << endl;
+            out << ait->author.name.size() << " " << ait->author.name << endl;
+            out << ait->content.size() << " " << ait->content << endl;
+        }   
+    }
+    
+    out.close();
+}
+
+/*
+ * Help function for Database::loadData();
+ */
+string Database::getString(ifstream& in, int length) {
+    char * buffer = new char[length];
+    in.ignore();
+    in.read(buffer, length);
+    
+    string str(buffer);
+    delete buffer;
+    
+    return str;
+}
+
+/*
+ * Loads all the newsgroups and articles from the harddisk
+ */
+void Database::loadData() { 
+    
+    cout << "Initializing database..." << endl;
+    ifstream in("data.db");
+    
+    int numOfGroups;
+    in >> numOfGroups;
+    
+    for(int i = 0; i < numOfGroups; ++i) {
+        
+        int groupID;
+        in >> groupID;
+        cout << "Newsgroup ID: " << groupID << endl;
+        
+        int sizeOfGroupName;
+        in >> sizeOfGroupName;
+        
+        string groupName = getString(in, sizeOfGroupName);
+        cout << "Newsgroup name: " << groupName << endl;
+   
+        Newsgroup group(groupID, groupName);
+        ArticleList artList;
+        newsgroups.push_back(make_pair(group, artList));
+        
+        int numOfArticles;
+        in >> numOfArticles;
+        for(int j = 0; j < numOfArticles; ++j) {
+            int articleID;
+            in >> articleID;
+            cout << "\tArticle ID: " << articleID << endl;
+            
+            int sizeOfTitle;
+            in >> sizeOfTitle;
+            
+            string artTitle = getString(in, sizeOfTitle);
+            cout << "\tArticle title: " << artTitle << endl;
+            
+            int sizeOfAuthorName;
+            in >> sizeOfAuthorName;
+            
+            string artAuthorName = getString(in, sizeOfAuthorName);
+            cout << "\tArticle author name: " << artAuthorName << endl;
+            
+            int sizeOfContent;
+            in >> sizeOfContent;
+            
+            string artContent = getString(in, sizeOfContent);
+            cout << "\tArticle content: " << artContent << endl << endl;
+            
+            // In a better implementation I would free this memory ;)
+            User* author = new User(artAuthorName);
+            Article* art = new Article(articleID, *author, artTitle, artContent);
+            artList.push_back(*art);
+        }
+    }
+    
+    in.close();
+    cout << "Database ready!" << endl << endl;
 }
