@@ -72,25 +72,21 @@ void Database::addArticle(int groupID, User author, std::string title, std::stri
  * Deletes an article from a newsgroup
  */
 void Database::deleteArticle(int groupID, int artID) {
-
+    
     GroupList::iterator git = findGroupByID(groupID);
     
-    if(git != newsgroups.end() && git->first.name != "") {
-        
-        ArticleList::iterator ait = git->second.begin();
-        while (ait != git->second.end()) {
-            
-            if(ait->ident == artID) {
-                git->second.erase(ait);
-            }
-            ++ait;
-        }
-        
-        if(ait == git->second.end())
-            throw ArticleDoesNotExistException();
-        
-    } else
+    if(git == newsgroups.end() || git->first.name == "")
         throw NewsgroupDoesNotExistException();
+    
+    ArticleList::iterator ait = git->second.begin();
+    while (ait != git->second.end() && ait->ident != artID){
+        ++ait;
+    }
+    
+    if(ait == git->second.end())
+        throw ArticleDoesNotExistException();
+    
+    git->second.erase(ait);
 }
 
 /*
