@@ -1,0 +1,14 @@
+Simply write:
+
+* ./make_all
+
+to compile everything. Your binaries will appear in ./bin/
+
+This is how you start the server:
+* ./server_[mem|disk] <port>
+
+This is how you start the client:
+* ./client <hostname> <port>
+
+There is a Java client in ./testserver/ and it starts like:
+* java -jar TestServer[1|2].jar <hostname> <port>
