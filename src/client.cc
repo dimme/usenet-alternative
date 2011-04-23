@@ -298,12 +298,18 @@ int main(int argc, char* argv[]) {
             else
                 cout << "Unknown command! Type 'help' for a list of available commands." << endl;
             
-            if (cmd != "help" && handler.recvCode() != Protocol::ANS_END)
+            if ((cmd == "list_ng" || 
+                 cmd == "create_ng" ||
+                 cmd == "delete_ng" ||
+                 cmd == "list_art" ||
+                 cmd == "create_art" ||
+                 cmd == "delete_art" ||
+                 cmd == "get_art") && handler.recvCode() != Protocol::ANS_END)
                 throw ProtocolViolationException();
             
             
             cout << endl << "# ";
-
+            
         } catch (ConnectionClosedException&) {
             cerr << "Server closed down" << endl;
             exit(1);

@@ -1,10 +1,20 @@
 #!/bin/sh
 
 echo "Making..."
-cd clientserver
+rm -rf bin/*
+cd src/clientserver
 make cleaner
 make
 cd ..
 make clean
 make
+cd ..
+mv src/server_mem bin/server_mem
+mv src/server_disk bin/server_disk
+mv src/client bin/client
+cd src/clientserver
+make cleaner
+cd ..
+make clean
+cd ..
 echo "Done making, enjoy the binaries!"
