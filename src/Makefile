@@ -3,33 +3,31 @@ CXXFLAGS += -Wmissing-braces -Wparentheses -Wold-style-cast
 LIBS = clientserver/libclientserver.a
 CXX = g++
 
-.PHONY: all clean client server1 server2
+.PHONY: all clean client server_mem server_disk
 
-all: client server1 server2
+all: client server_mem server_disk
 
-client: client.o $(LIBS)
-	$(CXX) -o client client.o $(LIBS)
+client: client.o message_handler.o $(LIBS)
+	$(CXX) -o client client.o message_handler.o $(LIBS)
 
-server1: server1.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
-	$(CXX) -o server1 server1.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
+server_mem: server.o database_mem.o article.o newsgroup.o user.o message_handler.o $(LIBS)
+	$(CXX) -o server_mem server.o database_mem.o article.o newsgroup.o user.o message_handler.o $(LIBS)
 
-server2: server2.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
-	$(CXX) -o server2 server2.o database.o article.o newsgroup.o user.o message_handler.o $(LIBS)
-
-
+server_disk: server.o database_disk.o article.o newsgroup.o user.o message_handler.o $(LIBS)
+	$(CXX) -o server_disk server.o database_disk.o article.o newsgroup.o user.o message_handler.o $(LIBS)
 
 
 client.o: client.cc
 	$(CXX) -c $(CXXFLAGS) client.cc
 
-server1.o: server1.cc
-	$(CXX) -c $(CXXFLAGS) server1.cc
+server.o: server.cc
+	$(CXX) -c $(CXXFLAGS) server.cc
 
-server2.o: server2.cc
-	$(CXX) -c $(CXXFLAGS) server2.cc
+database_mem.o: database_mem.cc database.h
+	$(CXX) -c $(CXXFLAGS) database_mem.cc
 
-database.o: database.cc database.h
-	$(CXX) -c $(CXXFLAGS) database.cc
+database_disk.o: database_disk.cc database.h
+	$(CXX) -c $(CXXFLAGS) database_disk.cc
 
 article.o: article.cc article.h
 	$(CXX) -c $(CXXFLAGS) article.cc
@@ -45,5 +43,5 @@ message_handler.o: message_handler.cc message_handler.h
 
 
 clean:
-	rm -rf *.o client server1 server2
+	rm -rf *.o client server_mem server_disk
 

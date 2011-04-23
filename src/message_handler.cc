@@ -26,8 +26,8 @@ void MessageHandler::sendByte(unsigned char code) {
  */
 void MessageHandler::sendCode(unsigned char code) {
     sendByte(code);
-    cout << protocolValue(code) << " ";
-    if (Protocol::ANS_END == code)
+    if (!isClient) cout << protocolValue(code) << " ";
+    if (Protocol::ANS_END == code && !isClient)
         cout << endl << endl;
 }
 
@@ -44,7 +44,7 @@ void MessageHandler::sendInt(int value) {
     sendByte((value >> 16) & 0xFF);
     sendByte((value >> 8) & 0xFF);
     sendByte(value & 0xFF);
-    cout << value << " ";
+    if (!isClient) cout << value << " ";
 }
 
 /**
@@ -74,7 +74,7 @@ void MessageHandler::sendStringParam(std::string param) {
     for (size_t i = 0; i < param.size(); ++i) {
         sendByte(param[i]);
     }
-    cout << param << " ";
+    if (!isClient) cout << param << " ";
 }
 
 /*
@@ -93,8 +93,8 @@ unsigned char MessageHandler::recvByte() {
  */
 unsigned char MessageHandler::recvCode() {
     unsigned char code = recvByte();
-    cout << protocolValue(code) << " ";
-    if (Protocol::COM_END == code)
+    if (!isClient) cout << protocolValue(code) << " ";
+    if (Protocol::COM_END == code && !isClient)
         cout << endl;
     return code;
 }
@@ -112,7 +112,7 @@ int MessageHandler::recvInt() {
     unsigned char byte3 = recvByte();
     unsigned char byte4 = recvByte();
     int value = byte1 << 24 | byte2 << 16 | byte3 << 8 | byte4;
-    cout << value << " ";
+    if (!isClient) cout << value << " ";
     return value;
 }
 
@@ -154,7 +154,7 @@ std::string MessageHandler::recvStringParam() {
         ss << recvByte();
     }
     
-    cout << ss.str() << " ";
+    if (!isClient) cout << ss.str() << " ";
     return ss.str();
 }
 

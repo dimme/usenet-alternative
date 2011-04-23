@@ -20,13 +20,16 @@ public:
 	 * 
 	 * @param conn
 	 *            The connection to use messages
+     * @param ic
+     *            Whether the MessageHandler is used by a client or not
 	 */
-    MessageHandler(client_server::Connection* c) : conn(c) { }
+    MessageHandler(client_server::Connection* c) : conn(c), isClient(false) { }
+    MessageHandler(client_server::Connection* c, bool ic) : conn(c), isClient(ic) { }
     
     /*
      * Copy constructor
      */
-    MessageHandler(const MessageHandler& h) : conn(h.conn) {}
+    MessageHandler(const MessageHandler& h) : conn(h.conn), isClient(h.isClient) {}
     
     void sendCode(unsigned char code);
     
@@ -50,7 +53,8 @@ private:
     unsigned char recvByte();
     
     client_server::Connection* conn; //The connection
-
+    
+    bool isClient;
 };
 
 

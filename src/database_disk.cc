@@ -22,7 +22,7 @@ Database::~Database() {
  */
 void Database::addNewsgroup(string name) {
 
-    if(findGroupByName(name) == newsgroups.end()) {
+    if(name != "" && findGroupByName(name) == newsgroups.end()) {
         Newsgroup group(findBiggestGroupID() + 1, name);
         ArticleList list;
         newsgroups.push_back(make_pair(group, list));
