@@ -219,7 +219,7 @@ void getArt(MessageHandler& handler, Database& db) {
  */
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        cerr << "Usage: myserver port-number" << endl;
+        cerr << "Usage: server_[mem|disk] port-number" << endl;
         exit(1);
     }
     
