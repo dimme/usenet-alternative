@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "message_handler.h"
 #include "clientserver/protocol.h"
 #include "database.h"
