@@ -43,5 +43,4 @@ message_handler.o: message_handler.cc message_handler.h
 
 
 clean:
-	rm -rf *.o client server_mem server_disk data.db
-
+	rm -rf *.o client server_mem server_disk
