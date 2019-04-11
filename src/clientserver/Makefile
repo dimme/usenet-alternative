@@ -5,7 +5,7 @@
 
 CXX		 = g++
 CXXFLAGS	 = -ggdb  -Wall -W -Werror -pedantic-errors
-CXXFLAGS	+= -Wmissing-braces -Wparentheses
+CXXFLAGS	+= -Wmissing-braces -Wparentheses -Wno-deprecated
 # The following option cannot be used since some of the socket
 # macros give warnings on "old-style-cast"
 #CXXFLAGS	+= -Wold-style-cast
